@@ -4,6 +4,8 @@
 <dict>
     <key>NFCReaderUsageDescription</key>
     <string>We need to use NFC</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Use camera for QR codes scanning</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
