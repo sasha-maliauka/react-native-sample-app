@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+=======
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, Alert, AlertOptions } from 'react-native';
+>>>>>>> 53209aa ([TP-50] QR scan)
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -7,6 +12,9 @@ import NfcManager, { NfcEvents, TagEvent } from 'react-native-nfc-manager';
 import { Buffer } from "buffer";
 
 global.Buffer = global.Buffer || require('buffer').Buffer
+
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import { BarCodeReadEvent, RNCamera } from 'react-native-camera';
 
 
 type RootStackParamList = {
@@ -84,10 +92,34 @@ const NfcScreen = () => {
 }
 
 const QrScreen = () => {
+
+  let scanner: QRCodeScanner | null
+
+  const onSuccess = (e: BarCodeReadEvent) => {
+    Alert.alert(
+      "QR detected!",
+      e.data,
+      [
+        {
+          text: "Ok",
+          style: "default",
+          onPress: () => { scanner?.reactivate() }
+        },
+      ]
+    );
+  };
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center' }}>
-      <Text style={styles.largeText}>I am QR screen!</Text>
-    </View>
+    <QRCodeScanner
+      ref={(node) => { scanner = node }}
+      onRead={onSuccess}
+      topContent={
+        <Text style={styles.largeText}>
+          Point your camera at QR code
+        </Text>
+      }
+      vibrate={false}
+    />
   );
 }
 
@@ -122,6 +154,7 @@ const styles = StyleSheet.create({
   largeText: {
     textAlign: 'center',
     fontSize: 22,
+<<<<<<< HEAD
     fontWeight: "700",
     marginVertical: 10,
     marginHorizontal: 16
@@ -132,6 +165,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+=======
+    fontWeight: "700"
+  },
+  centerText: {
+    flex: 1,
+    fontSize: 18,
+    padding: 32,
+    color: '#777'
+  },
+  textBold: {
+    fontWeight: '500',
+    color: '#000'
+  },
+  buttonText: {
+    fontSize: 21,
+    color: 'rgb(0,122,255)'
+  },
+  buttonTouchable: {
+    padding: 16
+  }
+>>>>>>> 53209aa ([TP-50] QR scan)
 })
 
 export default MyStack;
