@@ -2,11 +2,8 @@
     package="com.awesomeproject">
 
     <uses-permission android:name="android.permission.INTERNET" />
-<<<<<<< HEAD
     <uses-permission android:name="android.permission.NFC" />
-=======
     <uses-permission android:name="android.permission.VIBRATE"/>
->>>>>>> 53209aa ([TP-50] QR scan)
 
     <application
         android:name=".MainApplication"

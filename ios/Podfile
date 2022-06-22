@@ -35,11 +35,7 @@ target 'AwesomeProject' do
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable the next line.
-<<<<<<< HEAD
-#  use_flipper!()
-=======
   # use_flipper!()
->>>>>>> 53209aa ([TP-50] QR scan)
 
   post_install do |installer|
     react_native_post_install(installer)

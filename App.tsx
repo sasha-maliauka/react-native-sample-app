@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-=======
-import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Alert, AlertOptions } from 'react-native';
->>>>>>> 53209aa ([TP-50] QR scan)
+import { StyleSheet, View, Text, TouchableOpacity, Alert } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -14,7 +9,7 @@ import { Buffer } from "buffer";
 global.Buffer = global.Buffer || require('buffer').Buffer
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { BarCodeReadEvent, RNCamera } from 'react-native-camera';
+import { BarCodeReadEvent } from 'react-native-camera';
 
 
 type RootStackParamList = {
@@ -60,7 +55,7 @@ const NfcScreen = () => {
   }
 
   useEffect(() => {
-    NfcManager.isSupported().then(supported => {
+    NfcManager.isSupported().then((supported: boolean) => {
       if (supported) {
         NfcManager.start();
         NfcManager.registerTagEvent();
@@ -154,7 +149,6 @@ const styles = StyleSheet.create({
   largeText: {
     textAlign: 'center',
     fontSize: 22,
-<<<<<<< HEAD
     fontWeight: "700",
     marginVertical: 10,
     marginHorizontal: 16
@@ -164,9 +158,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-=======
-    fontWeight: "700"
   },
   centerText: {
     flex: 1,
@@ -185,7 +176,6 @@ const styles = StyleSheet.create({
   buttonTouchable: {
     padding: 16
   }
->>>>>>> 53209aa ([TP-50] QR scan)
 })
 
 export default MyStack;
