@@ -2,13 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<<<<<<< HEAD
     <key>NFCReaderUsageDescription</key>
     <string>We need to use NFC</string>
-=======
 	<key>NSCameraUsageDescription</key>
 	<string>Use camera for QR codes scanning</string>
->>>>>>> 53209aa ([TP-50] QR scan)
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
