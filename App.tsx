@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import NfcManager, { NfcEvents, TagEvent } from 'react-native-nfc-manager';
+import { Buffer } from "buffer";
+
+global.Buffer = global.Buffer || require('buffer').Buffer
 
 
 type RootStackParamList = {
@@ -40,9 +44,41 @@ const MyStack = () => {
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const NfcScreen = () => {
+
+  const [message, setMessage] = useState('');
+
+  const setTag = (tag: TagEvent) => {
+    setMessage("ID: " + tag?.id + "\nBase64: " + Buffer.from(tag?.id ?? '', 'hex').toString('base64'))
+  }
+
+  useEffect(() => {
+    NfcManager.isSupported().then(supported => {
+      if (supported) {
+        NfcManager.start();
+        NfcManager.registerTagEvent();
+      } else {
+        setMessage('NFC is not supported');
+      }
+    }, (rejectionReason) => {
+      setMessage('NFC support check was rejected ' + rejectionReason);
+    })
+  }, [])
+
+  useEffect(() => {
+    NfcManager.setEventListener(NfcEvents.DiscoverTag, (tag: TagEvent) => {
+      setTag(tag);
+    });
+    NfcManager.setEventListener(NfcEvents.DiscoverBackgroundTag, (tag: TagEvent) => {
+      setTag(tag);
+    });
+
+    return () => { NfcManager.unregisterTagEvent(); }
+  }, [NfcManager])
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center' }}>
-      <Text style={styles.largeText}>I am NFC screen!</Text>
+    <View style={styles.container}>
+      <Text style={styles.largeText}>I am NFC screen!{"\n"}Place the phone next to RFID-card!</Text>
+      <Text style={styles.largeText}>{message}</Text>
     </View>
   );
 }
@@ -80,15 +116,22 @@ const NavButton = (props: {
 
 const styles = StyleSheet.create({
   button: {
-    padding: 10,
     backgroundColor: 'white',
     justifyContent: 'center'
   },
   largeText: {
     textAlign: 'center',
     fontSize: 22,
-    fontWeight: "700"
-  }
+    fontWeight: "700",
+    marginVertical: 10,
+    marginHorizontal: 16
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 })
 
 export default MyStack;
